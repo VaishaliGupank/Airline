@@ -24,9 +24,6 @@ public class FlightInformation {
         this.departureDate = departureDate;
     }
 
-    public LocalDate getDepartureDate() {
-        return departureDate;
-    }
 
     public void setAeroplane(Aeroplane aeroplane) {
         this.aeroplane = aeroplane;
@@ -42,10 +39,6 @@ public class FlightInformation {
 
     public String getFlightNumber() {
         return this.flightNumber;
-    }
-
-    public int getTotalNoOfSeatsBooked() {
-        return noOfSeatsBookedEconomy + noOfSeatsBookedFirst + noOfSeatsBookedBusiness;
     }
 
     public int getNumberOfSeatsAvailable(TravelClass.TravelType travelType) {
@@ -68,6 +61,52 @@ public class FlightInformation {
 
         return 0;
     }
+
+    public double getfare(TravelClass.TravelType travelType)
+    {
+        Optional<TravelClass> travelClass = aeroplane.getTravelClasses().stream().
+                filter(plane -> plane.getTravelClass().equals(travelType)).findFirst();
+        if(travelClass.isPresent())
+        {
+            return (travelClass.get().getBasePrice());
+        }
+
+        return 0;
+    }
+
+    public boolean validateDepartureDate(Optional<LocalDate> departureDate)
+    {
+        if(Optional.ofNullable(departureDate).equals(Optional.empty()))
+        {
+            if(this.departureDate.isEqual(LocalDate.now()) || this.departureDate.isAfter(LocalDate.now()))
+                return true;
+
+        }
+        else
+        {
+            if(this.departureDate.equals(departureDate.get()))
+                return true;
+        }
+
+        return false;
+    }
+
+    public boolean validateNumberOfAvailableSeats(TravelClass.TravelType travelClass, int noOfBookedSeats)
+    {
+        if(this.getNumberOfSeatsAvailable(travelClass) >= noOfBookedSeats)
+            return true;
+        return false;
+    }
+
+    public boolean validateSourceAndDestination(String source, String destination)
+    {
+        if(this.source.equals(source) && this.destination.equals(destination))
+            return true;
+        return false;
+    }
+
+
+
 
 
 }
