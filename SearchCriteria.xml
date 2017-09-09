@@ -1,25 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <TestCases>
     <TestCase name="testSearchFlightsWithSourceAndDestination">
-        <Model name="FlightSearchCriteria">
-            <properties>
-                <property value="source">LKN</property>
-                <property value="destination">BOM</property>
-                <property value="noOfPassengers">0</property>
-                <property value="departureDate"></property>
-                <property value="travelClass">Economy</property>
-            </properties>
-        </Model>
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers>0</noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Economy</travelClass>
     </TestCase>
     <TestCase name="testSearchFlightsWithSourceAndDestinationWithNullDepartureDateAndDefaultNumberOfPassengers">
-        <Model name="FlightSearchCriteria">
-            <properties>
-                <property value="source">LKN</property>
-                <property value="destination">BOM</property>
-                <property value="noOfPassengers">0</property>
-                <property value="departureDate"></property>
-                <property value="travelClass">Economy</property>
-            </properties>
-        </Model>
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers></noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Economy</travelClass>
+    </TestCase>
+    <TestCase name="testSearchFlightsWithSourceAndDestinationWithNullDepartureDateAndNumberOfPassengers">
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers>28</noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Economy</travelClass>
+    </TestCase>
+    <TestCase name="testSearchFlightsWithSourceAndDestinationWithDepartureDateAndNumberOfPassengers">
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers>28</noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Economy</travelClass>
+    </TestCase>
+    <TestCase name="testSearchFlightsWithSourceAndDestinationWithDepartureDateAndDefaultNumberOfPassengers">
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers></noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Economy</travelClass>
+    </TestCase>
+    <TestCase name="testSearchFlightsWithSourceAndDestinationWithDepartureDateAndNumberOfPassengersBusinessClass">
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers>24</noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Business Class</travelClass>
+    </TestCase>
+    <TestCase name="testSearchFlightsWithSourceAndDestinationWithDepartureDateAndDefaultNumberOfPassengersBusinessClass">
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers></noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Business Class</travelClass>
+    </TestCase>
+    <TestCase name="testSearchFlightsWithSourceAndDestinationWithNullDepartureDateAndNumberOfPassengersBusinessClass">
+        <source>LKN</source>
+        <destination>BOM</destination>
+        <noOfPassengers>8</noOfPassengers>
+        <departureDate></departureDate>
+        <travelClass>Business Class</travelClass>
     </TestCase>
 </TestCases>
