@@ -41,38 +41,14 @@ public class FlightInformation {
         return this.flightNumber;
     }
 
-    public int getNumberOfSeatsAvailable(TravelClass.TravelType travelType) {
-        Optional<TravelClass> travelClass = aeroplane.getTravelClasses().stream().
-                filter(x -> x.getTravelClass().equals(travelType)).findFirst();
-        if(travelClass.isPresent())
-        {
-            switch(travelType)
-            {
-                case BUSINESS:
-                    return (travelClass.get().getNoOfSeats() - noOfSeatsBookedBusiness);
-                case FIRST:
-                    return (travelClass.get().getNoOfSeats() - noOfSeatsBookedFirst);
-                case ECONOMY:
-                    return (travelClass.get().getNoOfSeats() - noOfSeatsBookedEconomy);
-                default:
-                    return 0;
-
-            } }
-
-        return 0;
+    public Aeroplane getAeroplane() {
+        return aeroplane;
     }
 
-    public double getfare(TravelClass.TravelType travelType)
-    {
-        Optional<TravelClass> travelClass = aeroplane.getTravelClasses().stream().
-                filter(plane -> plane.getTravelClass().equals(travelType)).findFirst();
-        if(travelClass.isPresent())
-        {
-            return (travelClass.get().getBasePrice());
-        }
 
-        return 0;
-    }
+
+
+
 
     public boolean validateDepartureDate(Optional<LocalDate> departureDate)
     {
@@ -91,11 +67,19 @@ public class FlightInformation {
         return false;
     }
 
-    public boolean validateNumberOfAvailableSeats(TravelClass.TravelType travelClass, int noOfBookedSeats)
+    public boolean validateNumberOfAvailableSeats(TravelClass.TravelType travelType, int noOfBookingSeats)
     {
-        if(this.getNumberOfSeatsAvailable(travelClass) >= noOfBookedSeats)
-            return true;
-        return false;
+        int availableSeats = 0;
+        switch(travelType)
+        {
+            case BUSINESS:
+                availableSeats = this.aeroplane.getNumberOfSeatsAvailable(travelType,noOfSeatsBookedBusiness) - noOfBookingSeats;
+            case FIRST:
+                availableSeats = this.aeroplane.getNumberOfSeatsAvailable(travelType,noOfSeatsBookedFirst) - noOfBookingSeats;
+            case ECONOMY:
+                availableSeats = this.aeroplane.getNumberOfSeatsAvailable(travelType,noOfSeatsBookedEconomy) - noOfBookingSeats;
+        }
+        return (availableSeats >= 0 ? true : false);
     }
 
     public boolean validateSourceAndDestination(String source, String destination)
