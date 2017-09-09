@@ -6,14 +6,14 @@ import airline.Models.Place;
 import airline.Models.TravelClass;
 import airline.Repositories.FlightInformationRepository;
 import airline.Repositories.PlaceRepository;
+import airline.ViewModels.FlightSearchViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -39,6 +39,7 @@ public class FlightService {
 
     }
 
+
     public List<TravelClass.TravelType> getTravelClasses()
     {
         return Arrays.asList(TravelClass.TravelType.values());
@@ -47,34 +48,25 @@ public class FlightService {
 
     public List<FlightInformation> searchFlightsWithSourceAndDestination(String source, String destination) {
         return flightsInformationRepository.getFlightInformation().stream()
-                .filter(x -> x.getSource().equals(source))
-                .filter(x -> x.getDestination().equals(destination))
+                .filter(flight -> flight.validateSourceAndDestination(source,destination) == true)
                 .collect(Collectors.toList());
     }
 
     public List<FlightInformation> searchFlights(FlightSearchCriteria searchCriteria)
     {
+        List<FlightSearchViewModel> flistSearchViewModelList = new ArrayList<FlightSearchViewModel>();
         List<FlightInformation> getFlights;
-        List<FlightInformation> getFlightsWithSourceAndDestination = searchFlightsWithSourceAndDestination(searchCriteria.getSource(),
-                searchCriteria.getDestination());
-        if(Optional.ofNullable(searchCriteria.getParsedDate()).equals(Optional.empty()))
-        {
-
-            getFlights = getFlightsWithSourceAndDestination.stream()
-                    .filter(x -> x.getDepartureDate().isEqual(LocalDate.now()) || x.getDepartureDate().isAfter(LocalDate.now()))
-                    .filter(x -> x.getNumberOfSeatsAvailable(searchCriteria.getParsedTravelClass()) >= searchCriteria.getNoOfPassengers())
+        getFlights = searchFlightsWithSourceAndDestination(searchCriteria.getSource(),
+                searchCriteria.getDestination()).stream()
+                    .filter(flight -> flight.validateDepartureDate(searchCriteria.getParsedDate()) == true)
+                    .filter(flight ->
+                            flight.validateNumberOfAvailableSeats(searchCriteria.getParsedTravelClass(),
+                                    searchCriteria.getNoOfPassengers().orElse(1)) == true)
                     .collect(Collectors.toList());
-
-        }
-        else
-        {
-            getFlights = getFlightsWithSourceAndDestination.stream()
-                    .filter(x -> x.getDepartureDate().isEqual(searchCriteria.getParsedDate().get()))
-                    .filter(x -> x.getNumberOfSeatsAvailable(searchCriteria.getParsedTravelClass()) >= searchCriteria.getNoOfPassengers())
-                    .collect(Collectors.toList());
-        }
         return getFlights;
     }
+
+
 
 
 }
