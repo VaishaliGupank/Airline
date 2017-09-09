@@ -32,9 +32,9 @@ public class AeroplaneRepository {
     public List<TravelClass> getTravelClassDataForBoing()
     {
         List<TravelClass> travelClassList =  new ArrayList<TravelClass>();
-        TravelClass classInfoForEconomy = new TravelClass(TravelClass.TravelType.ECONOMY, 195);
-        TravelClass classInfoForBusiness = new TravelClass(TravelClass.TravelType.BUSINESS, 35);
-        TravelClass classInfoForFirst = new TravelClass(TravelClass.TravelType.FIRST, 8);
+        TravelClass classInfoForEconomy = new TravelClass(TravelClass.TravelType.ECONOMY, 195, 6000);
+        TravelClass classInfoForBusiness = new TravelClass(TravelClass.TravelType.BUSINESS, 35, 13000);
+        TravelClass classInfoForFirst = new TravelClass(TravelClass.TravelType.FIRST, 8, 20000);
         travelClassList.add(classInfoForEconomy);
         travelClassList.add(classInfoForBusiness);
         travelClassList.add(classInfoForFirst);
@@ -45,9 +45,9 @@ public class AeroplaneRepository {
     public List<TravelClass> getTravelClassDataFor319()
     {
         List<TravelClass> travelClassList =  new ArrayList<TravelClass>();
-        TravelClass classInfoForEconomy = new TravelClass(TravelClass.TravelType.ECONOMY, 144);
-        TravelClass classInfoForBusiness = new TravelClass(TravelClass.TravelType.BUSINESS, 0);
-        TravelClass classInfoForFirst = new TravelClass(TravelClass.TravelType.FIRST, 0);
+        TravelClass classInfoForEconomy = new TravelClass(TravelClass.TravelType.ECONOMY, 144,4000);
+        TravelClass classInfoForBusiness = new TravelClass(TravelClass.TravelType.BUSINESS, 0,0);
+        TravelClass classInfoForFirst = new TravelClass(TravelClass.TravelType.FIRST, 0,0);
         travelClassList.add(classInfoForEconomy);
         travelClassList.add(classInfoForBusiness);
         travelClassList.add(classInfoForFirst);
@@ -57,9 +57,9 @@ public class AeroplaneRepository {
     public List<TravelClass> getTravelClassDatafor321()
     {
         List<TravelClass> travelClassList =  new ArrayList<TravelClass>();
-        TravelClass classInfoForEconomy = new TravelClass(TravelClass.TravelType.ECONOMY, 25);
-        TravelClass classInfoForBusiness = new TravelClass(TravelClass.TravelType.BUSINESS, 20);
-        TravelClass classInfoForFirst = new TravelClass(TravelClass.TravelType.FIRST, 0);
+        TravelClass classInfoForEconomy = new TravelClass(TravelClass.TravelType.ECONOMY, 152,5000);
+        TravelClass classInfoForBusiness = new TravelClass(TravelClass.TravelType.BUSINESS, 20,10000);
+        TravelClass classInfoForFirst = new TravelClass(TravelClass.TravelType.FIRST, 0,0);
         travelClassList.add(classInfoForEconomy);
         travelClassList.add(classInfoForBusiness);
         travelClassList.add(classInfoForFirst);
