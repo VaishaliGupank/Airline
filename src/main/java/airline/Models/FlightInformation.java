@@ -45,11 +45,6 @@ public class FlightInformation {
         return aeroplane;
     }
 
-
-
-
-
-
     public boolean validateDepartureDate(Optional<LocalDate> departureDate)
     {
         if(Optional.ofNullable(departureDate).equals(Optional.empty()))
