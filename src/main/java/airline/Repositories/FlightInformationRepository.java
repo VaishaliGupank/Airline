@@ -20,16 +20,6 @@ public class FlightInformationRepository {
         populateFlightInformation();
     }
 
-    public void addFlightInformation(FlightInformation flightInfo)
-    {
-        flightInformationList.add(flightInfo);
-    }
-
-    public void removeFlightInformation(FlightInformation flightInfo)
-    {
-        flightInformationList.remove(flightInfo);
-    }
-
     public List<FlightInformation> getFlightInformation()
     {
         return flightInformationList;
