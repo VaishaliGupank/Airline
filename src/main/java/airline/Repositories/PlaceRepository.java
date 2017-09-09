@@ -17,16 +17,6 @@ public class PlaceRepository {
         populatePlaces();
     }
 
-    public void addPlace(Place place)
-    {
-        places.add(place);
-    }
-
-    public void removePlace(Place place)
-    {
-        places.remove(place);
-    }
-
     public List<Place> getPlaces()
     {
         return places;
