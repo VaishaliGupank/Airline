@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TestCases>
+    <TestCase name="testSearchFlightsWithSourceAndDestination">
+        <Model name="FlightSearchCriteria">
+            <properties>
+                <property value="source">LKN</property>
+                <property value="destination">BOM</property>
+                <property value="noOfPassengers">0</property>
+                <property value="departureDate"></property>
+                <property value="travelClass">Economy</property>
+            </properties>
+        </Model>
+    </TestCase>
+    <TestCase name="testSearchFlightsWithSourceAndDestinationWithNullDepartureDateAndDefaultNumberOfPassengers">
+        <Model name="FlightSearchCriteria">
+            <properties>
+                <property value="source">LKN</property>
+                <property value="destination">BOM</property>
+                <property value="noOfPassengers">0</property>
+                <property value="departureDate"></property>
+                <property value="travelClass">Economy</property>
+            </properties>
+        </Model>
+    </TestCase>
+</TestCases>
