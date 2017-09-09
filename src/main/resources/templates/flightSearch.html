@@ -1,96 +1,109 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Getting Started: Serving Web Content</title>
+    <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
     <style>
     .error {
         color: red; font-weight: bold;
     }
+
+}
+
     </style>
+    <script language="JavaScript">
+
+    </script>
 </head>
 <body>
+<script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <form action="#" method="post" th:action="@{/searchFlights}" th:object="${flightSearchCriteria}">
-    <p th:text = "'Welcome to TWAirline'"/>
-        <table>
-            <tr>
-                <td>
-                    <label>Source</label>
-                </td>
-                <td>
-                    <select class="form-control" id="source" name="source" th:field="*{source}"  >
-                        <option value="">Select Source</option>
-                        <option th:each="dropDownItem : ${cities}"
-                                th:value="${dropDownItem.placeName}"
-                                th:text="${dropDownItem.placeName}" />
+   <div class="jumbotron text-center">
+        <h1>Welcome to TW Airlines</h1>
+    </div>
+    <div class="container">
+        <div class="panel panel-default">
+        <div class="row" style="padding-top: 30px;padding-left: 10px;padding-right: 10px;padding-bottom: 10px;">
+            <div class="col-sm-2">
+                <label>Source</label>
+                <select class="form-control" id="source" name="source" th:field="*{source}"  >
+                    <option value="">Select Source</option>
+                    <option th:each="dropDownItem : ${cities}"
+                            th:value="${dropDownItem.placeName}"
+                            th:text="${dropDownItem.placeName}" />
 
-                    </select>
-                </td>
-                 <td th:if="${#fields.hasErrors('source')}" th:errors="*{source}" class="error">Enter Source</td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Destination</label>
-                </td>
-                <td>
-                    <select class="form-control" id="destination" name="destination" th:field="*{destination}"  >
+                </select>
+                <label th:if="${#fields.hasErrors('source')}" th:errors="*{source}" class="error"/>
+            </div>
+            <div class="col-sm-2">
+                <label>Destination</label>
+                <select class="form-control" id="destination" name="destination" th:field="*{destination}"  >
                         <option value="">Select Destination</option>
                         <option th:each="dropDownItem : ${cities}"
                                 th:value="${dropDownItem.placeName}"
                                 th:text="${dropDownItem.placeName}" />
-                    </select>
-                </td>
-                <td th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}" class="error">Enter Destination</td>
-            </tr>
-            <tr>
-                <td>
-                    <label>Number of Passengers </label>
-                </td>
-                <td>
-                    <input type="number" value="1" min="1" id="noOfPassengers" name="noOfPassengers" th:field="*{noOfPassengers}"/>
-                </td>
-            </tr>
-            <tr>
-                <td> <label>Departure Date</label></td>
-                <td>
-                    <input id="departureDate" name="departureDate" type="date" th:field="*{departureDate}" />
-                </td>
-            </tr>
-            <tr>
-                <td> <label>Travel Class</label></td>
-                <td>
+                </select>
+                <label th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}" class="error"/>
+            </div>
+            <div class="col-sm-2">
+                    <label>Travel Class</label>
                     <select class="form-control" id="travelClass" name="travelClass" th:field="*{travelClass}"  >
                         <option value="">Select Class</option>
                         <option th:each="dropDownItem : ${travelClasses}"
                                 th:value="${dropDownItem.displayName()}"
                                 th:text="${dropDownItem.displayName()}" />
                     </select>
-                </td>
-                <td th:if="${#fields.hasErrors('travelClass')}" th:errors="*{travelClass}" class="error">Enter travel class</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td >
-                    <input type="submit" value="Submit"></input>
-                </td>
-            </tr>
-        </table>
-    <table>
-        <tr>
-            <tbody>
-                <tr>
-                    <th th:text="Source"></th>
-                    <th th:text="Destination"></th>
-                    <th th:text="FlightNumber"></th>
-                </tr>
-                <tr th:each="flight: ${flights}">
-                    <td th:text="${flight.source}"></td>
-                    <td th:text="${flight.destination}"></td>
-                    <td th:text="${flight.flightNumber}"></td>
-                </tr>
-            </tbody>
-        </tr>
-    </table>
+                    <label th:if="${#fields.hasErrors('travelClass')}" th:errors="*{travelClass}" class="error"/>
+                </div>
+            <div class="col-sm-2">
+                <label >Departure Date</label>
+                <input class="form-control"  id="departureDate" name="departureDate" type="date" th:field="*{departureDate}" />
+
+            </div>
+            <div class="col-sm-2">
+                <label>Number of Passengers </label>
+                <input class="form-control" type="number" id="noOfPassengers" name="noOfPassengers" th:field="*{noOfPassengers}"/>
+
+            </div>
+            <div class="col-sm-2" >
+                <button type="submit" value="Submit" class="btn btn-info">
+                    <span class="glyphicon glyphicon-search"></span>Search
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+      <div class="container">
+          <table class="table table-bordered">
+              <tr>
+                  <tbody>
+                  <tr>
+                      <th th:text="Source"></th>
+                      <th th:text="Destination"></th>
+                      <th th:text="FlightNumber"></th>
+                      <th th:text="Fare"></th>
+                  </tr>
+                  <tr th:each="flight: ${flights}">
+                      <td th:text="${flight.source}"></td>
+                      <td th:text="${flight.destination}"></td>
+                      <td th:text="${flight.flightNumber}"></td>
+                      <td th:text="${flight.fare}"></td>
+                  </tr>
+                  </tbody>
+              </tr>
+
+          </table>
+      </div>
+
+
 
 </form>
 </body>
