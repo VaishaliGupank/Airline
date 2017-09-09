@@ -2,30 +2,30 @@ package airline.Models;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.Min;
 import java.time.LocalDate;
 import java.util.Optional;
 
 public class FlightSearchCriteria {
+
     @NotEmpty(message = "Please enter your source.")
     private String source;
+
     @NotEmpty(message = "Please enter your destination.")
     private String destination;
-    @Min(value=1)
-    private int noOfPassengers;
+
+    private Optional<Integer> noOfPassengers;
     private String departureDate;
-    private Optional<LocalDate> departDate;
-    private TravelClass.TravelType casttravelClass;
+
     @NotEmpty(message = "Please enter your travel class.")
     private String travelClass;
 
-    public String getTravelClass() {
+   public String getTravelClass() {
         return travelClass;
     }
 
     public void setTravelClass(String travelClass) {
         this.travelClass = travelClass;
-        this.casttravelClass = getEnumByString(travelClass);
+
     }
 
     public String getDepartureDate() {
@@ -33,24 +33,7 @@ public class FlightSearchCriteria {
     }
 
     public void setDepartureDate(String departureDate) {
-
-        if(departureDate.isEmpty() || departureDate == null) {
-            this.departDate = null;
-        }
-        else
-            this.departDate = Optional.of(LocalDate.parse(departureDate));
-
         this.departureDate = departureDate;
-    }
-
-    public Optional<LocalDate> getParsedDate()
-    {
-        return this.departDate;
-    }
-
-    public TravelClass.TravelType getParsedTravelClass()
-    {
-        return this.casttravelClass;
     }
 
     public String getSource() {
@@ -69,21 +52,31 @@ public class FlightSearchCriteria {
         this.destination = destination;
     }
 
-    public int getNoOfPassengers() {
+    public Optional<Integer> getNoOfPassengers() {
         return noOfPassengers;
     }
 
-    public void setNoOfPassengers(int noOfPassengers) {
-        this.noOfPassengers = noOfPassengers;
+    public void setNoOfPassengers(Optional<Integer> noOfPassengers) {
+        this.noOfPassengers =  noOfPassengers;
     }
 
-    public TravelClass.TravelType getEnumByString(String code){
+    public TravelClass.TravelType getParsedTravelClass(){
         for(TravelClass.TravelType e : TravelClass.TravelType.values())
         {
-            if(code.equals(e.displayName()))
+            if(this.travelClass.equals(e.displayName()))
                 return e;
         }
         return null;
+    }
+
+
+    public Optional<LocalDate> getParsedDate()
+    {
+        if(this.departureDate.isEmpty() || this.departureDate == null) {
+            return null;
+        }
+        else
+            return Optional.of(LocalDate.parse(departureDate));
     }
 
 }
