@@ -17,13 +17,10 @@ public class Aeroplane {
         this.travelClasses = travelClasses;
     }
 
-    public List<TravelClass> getTravelClasses() {
-        return travelClasses;
-    }
 
     public int getNumberOfSeatsAvailable(TravelClass.TravelType travelType , int noOfSeatsBooked) {
-        Optional<TravelClass> travelClass = this.getTravelClasses().stream().
-                filter(plane -> plane.getTravelClass().equals(travelType)).findFirst();
+        Optional<TravelClass> travelClass = this.travelClasses.stream().
+                filter(travelClasses -> travelClasses.getTravelClass().equals(travelType)).findFirst();
         if(travelClass.isPresent())
         {
             return (travelClass.get().getNoOfSeats() - noOfSeatsBooked);
@@ -34,8 +31,8 @@ public class Aeroplane {
 
     public double getBasefare(TravelClass.TravelType travelType)
     {
-        Optional<TravelClass> travelClass = this.getTravelClasses().stream().
-                filter(plane -> plane.getTravelClass().equals(travelType)).findFirst();
+        Optional<TravelClass> travelClass = this.travelClasses.stream().
+                filter(travelClasses -> travelClasses.getTravelClass().equals(travelType)).findFirst();
         if(travelClass.isPresent())
         {
             return (travelClass.get().getBasePrice());
