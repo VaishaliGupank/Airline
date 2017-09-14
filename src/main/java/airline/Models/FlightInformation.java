@@ -126,26 +126,26 @@ public class FlightInformation {
         {
             case BUSINESS:
                 pricingModel = new PricingModel();
-                pricingModel.setBaseFare(Optional.of(aeroplane.getBasefare(TravelClass.TravelType.BUSINESS)));
-                pricingModel.setNoOfRequestedSeats(Optional.of(noOfRequestedSeats));
+                pricingModel.setBaseFare(aeroplane.getBasefare(TravelClass.TravelType.BUSINESS));
+                pricingModel.setNoOfRequestedSeats(noOfRequestedSeats);
                 pricingModel.setDepartureDate(Optional.of(this.departureDate));
                 processor = new BusinessClassPriceProcessor(pricingModel,pricingXml);
                 fare = processor.getFare();
                 break;
             case FIRST:
                 pricingModel = new PricingModel();
-                pricingModel.setBaseFare(Optional.of(aeroplane.getBasefare(TravelClass.TravelType.FIRST)));
-                pricingModel.setNoOfRequestedSeats(Optional.of(noOfRequestedSeats));
+                pricingModel.setBaseFare(aeroplane.getBasefare(TravelClass.TravelType.FIRST));
+                pricingModel.setNoOfRequestedSeats(noOfRequestedSeats);
                 pricingModel.setDepartureDate(Optional.of(this.departureDate));
                 processor = new FirstClassPriceProcessor(pricingModel,pricingXml);
                 fare = processor.getFare();
                 break;
             case ECONOMY:
                 pricingModel = new PricingModel();
-                pricingModel.setBaseFare(Optional.of(aeroplane.getBasefare(TravelClass.TravelType.ECONOMY)));
+                pricingModel.setBaseFare(aeroplane.getBasefare(TravelClass.TravelType.ECONOMY));
                 pricingModel.setTotalCapacity(Optional.of(aeroplane.getNumberOfSeatsAvailable(TravelClass.TravelType.ECONOMY)));
                 pricingModel.setNoOfOccupiedSeats(Optional.of(this.noOfOccupiedSeatsPerClass.get(TravelClass.TravelType.ECONOMY)));
-                pricingModel.setNoOfRequestedSeats(Optional.of(noOfRequestedSeats));
+                pricingModel.setNoOfRequestedSeats(noOfRequestedSeats);
                 processor = new EconomyClassPriceProcessor(pricingModel,pricingXml);
                 fare = processor.getFare();
                 break;
