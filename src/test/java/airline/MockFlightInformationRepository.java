@@ -7,6 +7,7 @@ import airline.Models.TravelClass;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class MockFlightInformationRepository  {
@@ -26,17 +27,21 @@ public class MockFlightInformationRepository  {
     public void populateFlightInformation()
     {
 
+        HashMap<TravelClass.TravelType, Integer> noofOccupiedSeats = new HashMap<TravelClass.TravelType,Integer>();
+        noofOccupiedSeats.put(TravelClass.TravelType.ECONOMY,12);
+        noofOccupiedSeats.put(TravelClass.TravelType.FIRST,0);
+        noofOccupiedSeats.put(TravelClass.TravelType.BUSINESS,0);
         mockFlightInfoRepo.add(new FlightInformation("HYD","BOM","Vapasi-123",
-                LocalDate.of(2017, Month.SEPTEMBER, 14)));
+                LocalDate.of(2017, Month.SEPTEMBER, 14),noofOccupiedSeats));
         mockFlightInfoRepo.get(0).setAeroplane(populateAeroplanes(0));
         mockFlightInfoRepo.add(new FlightInformation("BOM","HYD","Vapasi-456",
-                LocalDate.of(2017, Month.AUGUST, 21)));
+                LocalDate.of(2017, Month.AUGUST, 21),noofOccupiedSeats));
         mockFlightInfoRepo.get(1).setAeroplane(populateAeroplanes(1));
         mockFlightInfoRepo.add(new FlightInformation("LKN","BOM","Vapasi-987",
-                LocalDate.of(2017, Month.SEPTEMBER, 19)));
+                LocalDate.of(2017, Month.SEPTEMBER, 19),noofOccupiedSeats));
         mockFlightInfoRepo.get(2).setAeroplane(populateAeroplanes(2));
         mockFlightInfoRepo.add(new FlightInformation("LKN","BOM","Vapasi-100",
-                LocalDate.of(2017, Month.SEPTEMBER, 5)));
+                LocalDate.of(2017, Month.SEPTEMBER, 5),noofOccupiedSeats));
         mockFlightInfoRepo.get(3).setAeroplane(populateAeroplanes(3));
 
     }
