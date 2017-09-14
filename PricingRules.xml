@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PricingRules>
+    <PricingRule name="FareBasedOnAvailabilityOfSeats">
+        <TravelClass name="Economy">
+            <Rule id="1">
+                <minPercentOfBookedSeats>0</minPercentOfBookedSeats>
+                <maxPercentOfBookedSeats>40</maxPercentOfBookedSeats>
+                <incrementPercentInFare>0</incrementPercentInFare>
+            </Rule>
+            <Rule id="2">
+                <minPercentOfBookedSeats>41</minPercentOfBookedSeats>
+                <maxPercentOfBookedSeats>90</maxPercentOfBookedSeats>
+                <incrementPercentInFare>30</incrementPercentInFare>
+            </Rule>
+            <Rule id="3">
+                <minPercentOfBookedSeats>91</minPercentOfBookedSeats>
+                <maxPercentOfBookedSeats>100</maxPercentOfBookedSeats>
+                <incrementPercentInFare>60</incrementPercentInFare>
+            </Rule>
+        </TravelClass>
+    </PricingRule>
+    <PricingRule name="OpenDaysBefore">
+       <TravelClass name="Economy"></TravelClass>
+        <TravelClass name="Business">28</TravelClass>
+        <TravelClass name="First">10</TravelClass>
+    </PricingRule>
+    <PricingRule name="HikedFareOnDays">
+        <TravelClass name="Economy"></TravelClass>
+        <TravelClass name="Business">
+            <days>Mon,Fri,Sun</days>
+            <incrementPercentInFare>40</incrementPercentInFare>
+        </TravelClass>
+        <TravelClass name="First">10</TravelClass>
+    </PricingRule>
+    <PricingRule name="EveryDayIncrementInFareAfterOpeningDay">
+        <TravelClass name="Economy"></TravelClass>
+        <TravelClass name="Business"></TravelClass>
+        <TravelClass name="First">
+            <incrementPercentInFare>10</incrementPercentInFare>
+        </TravelClass>
+    </PricingRule>
+
+</PricingRules>
