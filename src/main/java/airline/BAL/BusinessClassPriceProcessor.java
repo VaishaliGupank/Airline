@@ -20,15 +20,14 @@ public class BusinessClassPriceProcessor extends PriceProcessor {
         if(pricingModel.departureDate.isPresent()) {
             DayOfWeek day =  pricingModel.departureDate.get().getDayOfWeek();
             Float incrementPercentInFare = pricingRules.get(day.name());
-            if(incrementPercentInFare != null)
-            totalFare = Math.round(pricingModel.baseFare *
+            totalFare = incrementPercentInFare != null ? Math.round(pricingModel.baseFare *
                     (incrementPercentInFare / 100 + 1))
-                    * pricingModel.noOfRequestedSeats;
-            else
-                totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
+                    * pricingModel.noOfRequestedSeats : pricingModel.baseFare * pricingModel.noOfRequestedSeats;
+
         }
         else
-            totalFare = pricingModel.baseFare;
+            totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
+
         return totalFare;
     }
 
