@@ -14,6 +14,7 @@ public class PricingModel {
     protected Optional<Integer> totalCapacity;
     protected Optional<LocalDate> departureDate;
     protected Optional<Integer> noOfOccupiedSeats;
+
     public void setBaseFare(Double baseFare) {
         this.baseFare = baseFare;
     }
