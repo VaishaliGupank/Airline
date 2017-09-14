@@ -17,16 +17,18 @@ public class BusinessClassPriceProcessor extends PriceProcessor {
 
         Map<String,Float> pricingRules = pricingXMLReader.getPricingRulesForBusinessClass();
         double totalFare = 0;
-        if(pricingModel.departureDate.isPresent() && pricingModel.baseFare.isPresent() && pricingModel.noOfRequestedSeats.isPresent()) {
+        if(pricingModel.departureDate.isPresent()) {
             DayOfWeek day =  pricingModel.departureDate.get().getDayOfWeek();
             Float incrementPercentInFare = pricingRules.get(day.name());
             if(incrementPercentInFare != null)
-            totalFare = Math.round(pricingModel.baseFare.get() *
+            totalFare = Math.round(pricingModel.baseFare *
                     (incrementPercentInFare / 100 + 1))
-                    * pricingModel.noOfRequestedSeats.get();
+                    * pricingModel.noOfRequestedSeats;
             else
-                totalFare = pricingModel.baseFare.get() * pricingModel.noOfRequestedSeats.get();
+                totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
         }
+        else
+            totalFare = pricingModel.baseFare;
         return totalFare;
     }
 
