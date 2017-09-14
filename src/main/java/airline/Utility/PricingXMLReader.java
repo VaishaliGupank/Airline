@@ -130,7 +130,7 @@ public class PricingXMLReader {
     }
 
 
-    public float getPricingRulesForFirstClass()
+    public float getPercentIncrementInFareFirstClass()
     {
         float incrementPercentInFare = 0;
         Element getPriceRule;
