@@ -1,18 +1,20 @@
 package airline.BAL;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
 public class PricingModel {
 
-    protected Optional<Double> baseFare;
+    @NotEmpty
+    protected Double baseFare;
+    @NotEmpty
+    protected Integer noOfRequestedSeats;
     protected Optional<Integer> totalCapacity;
     protected Optional<LocalDate> departureDate;
     protected Optional<Integer> noOfOccupiedSeats;
-    protected Optional<Integer> noOfRequestedSeats;
-
-
-    public void setBaseFare(Optional<Double> baseFare) {
+    public void setBaseFare(Double baseFare) {
         this.baseFare = baseFare;
     }
 
@@ -28,7 +30,7 @@ public class PricingModel {
         this.noOfOccupiedSeats = noOfOccupiedSeats;
     }
 
-    public void setNoOfRequestedSeats(Optional<Integer> noOfRequestedSeats) {
+    public void setNoOfRequestedSeats(Integer noOfRequestedSeats) {
         this.noOfRequestedSeats = noOfRequestedSeats;
     }
 
