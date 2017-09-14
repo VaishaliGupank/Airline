@@ -21,12 +21,10 @@ public class EconomyClassPriceProcessor extends PriceProcessor  {
         List<PricingRule> pricingRules = pricingXMLReader.getPricingRulesForEconomy();
         double totalFare = 0;
         if(pricingModel.totalCapacity.isPresent() &&
-                pricingModel.noOfOccupiedSeats.isPresent() &&
-                pricingModel.noOfRequestedSeats.isPresent() &&
-                pricingModel.baseFare.isPresent()) {
+                pricingModel.noOfOccupiedSeats.isPresent()) {
             double whatPercentFlightIsFullBeforeBooking = whatPercentFlightIsFull(pricingModel.totalCapacity.get(), pricingModel.noOfOccupiedSeats.get());
             double whatPercentFlightIsFullAfterBooking = whatPercentFlightIsFull(pricingModel.totalCapacity.get(),
-                    pricingModel.noOfOccupiedSeats.get() + pricingModel.noOfRequestedSeats.get());
+                    pricingModel.noOfOccupiedSeats.get() + pricingModel.noOfRequestedSeats);
 
             Optional<PricingRule> pricingRuleForBooking = pricingRules.stream().
                     filter(pricingRule -> pricingRule.getMinPercentOfBookedSeats() <= whatPercentFlightIsFullBeforeBooking &&
@@ -34,11 +32,13 @@ public class EconomyClassPriceProcessor extends PriceProcessor  {
 
 
             if (pricingRuleForBooking.isPresent()) {
-                totalFare = Math.round(pricingModel.baseFare.get() *
+                totalFare = Math.round(pricingModel.baseFare *
                         (pricingRuleForBooking.get().getIncrementPercentInFare() / 100 + 1))
-                        * pricingModel.noOfRequestedSeats.get();
+                        * pricingModel.noOfRequestedSeats;
             }
         }
+        else
+            totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
 
         return totalFare;
     }
