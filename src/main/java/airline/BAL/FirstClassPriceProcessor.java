@@ -18,17 +18,17 @@ public class FirstClassPriceProcessor extends PriceProcessor {
         float incrementPercentInFare = pricingXMLReader.getPricingRulesForFirstClass();
         double totalFare = 0;
 
-        if(pricingModel.departureDate.isPresent() &&
-                pricingModel.baseFare.isPresent() &&
-                pricingModel.noOfRequestedSeats.isPresent())
+        if(pricingModel.departureDate.isPresent())
         {
             LocalDate openingDateOfBookingFlight = pricingModel.departureDate.get().minusDays(10);
             long daysBetweenDateOfTravelAndOpeningDateOfBookingFlight = ChronoUnit.DAYS.between(openingDateOfBookingFlight,
                     LocalDate.now());
-            totalFare = Math.round(pricingModel.baseFare.get() *
+            totalFare = Math.round(pricingModel.baseFare *
                     Math.pow(incrementPercentInFare /100 + 1, daysBetweenDateOfTravelAndOpeningDateOfBookingFlight))
-                    * pricingModel.noOfRequestedSeats.get();
+                    * pricingModel.noOfRequestedSeats;
         }
+        else
+            totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
         return totalFare;
     }
 
