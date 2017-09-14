@@ -1,6 +1,12 @@
 package airline.Models;
 
+import airline.BAL.*;
+import airline.Utility.PricingXMLReader;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Map;
 import java.util.Optional;
 
 public class FlightInformation {
@@ -9,21 +15,24 @@ public class FlightInformation {
     private String flightNumber;
     private Aeroplane aeroplane;
     private LocalDate departureDate;
-    private int noOfSeatsBookedEconomy;
-    private int noOfSeatsBookedFirst;
-    private int noOfSeatsBookedBusiness;
+    private Map<TravelClass.TravelType, Integer> noOfOccupiedSeatsPerClass;
+
+    @Autowired
+    private PricingXMLReader pricingXml = new PricingXMLReader();
+
 
     public FlightInformation() {
 
     }
 
-    public FlightInformation(String source, String destination, String flightName, LocalDate departureDate) {
+    public FlightInformation(String source, String destination, String flightName, LocalDate departureDate,
+                             Map<TravelClass.TravelType, Integer> noOfOccupiedSeatsPerClass) {
         this.source = source;
         this.destination = destination;
         this.flightNumber = flightName;
         this.departureDate = departureDate;
+        this.noOfOccupiedSeatsPerClass = noOfOccupiedSeatsPerClass;
     }
-
 
     public void setAeroplane(Aeroplane aeroplane) {
         this.aeroplane = aeroplane;
@@ -45,36 +54,58 @@ public class FlightInformation {
         return aeroplane;
     }
 
-    public boolean validateDepartureDate(Optional<LocalDate> departureDate)
+    public boolean validateDepartureDate(Optional<LocalDate> departureDate, TravelClass.TravelType travelType)
     {
-        if(Optional.ofNullable(departureDate).equals(Optional.empty()))
-        {
+        boolean validateDepartureDate = false;
+        if(Optional.ofNullable(departureDate).equals(Optional.empty())) {
             if(this.departureDate.isEqual(LocalDate.now()) || this.departureDate.isAfter(LocalDate.now()))
-                return true;
-
+                validateDepartureDate = true;
         }
-        else
-        {
+        else {
             if(this.departureDate.equals(departureDate.get()))
-                return true;
+                validateDepartureDate = true;
         }
-
-        return false;
+        boolean validateDepartureDateforClasses = validateDepartureDateforClasses(travelType);
+        return validateDepartureDate && validateDepartureDateforClasses;
     }
 
-    public boolean validateNumberOfAvailableSeats(TravelClass.TravelType travelType, int noOfBookingSeats)
+    private boolean validateDepartureDateforClasses(TravelClass.TravelType travelType)
     {
-        int availableSeats = 0;
+        int noOfDaysBeforeBookingStarts = pricingXml.
+                getDaysWhenBookingIsAllowedBeforeDepartureDate(travelType.displayName()).get();
+        switch (travelType)
+        {
+            case ECONOMY:
+                return true;
+            case BUSINESS:
+            case FIRST:
+                if(Period.between(this.departureDate, LocalDate.now()).getDays() <=
+                        noOfDaysBeforeBookingStarts);
+                    return true;
+
+        }
+        return false;
+
+    }
+
+    public boolean validateNumberOfAvailableSeats(TravelClass.TravelType travelType, int noOfRequestedSeats)
+    {
+
+        Integer noOfOccupiedSeats = 0;
         switch(travelType)
         {
             case BUSINESS:
-                availableSeats = this.aeroplane.getNumberOfSeatsAvailable(travelType,noOfSeatsBookedBusiness) - noOfBookingSeats;
+                noOfOccupiedSeats = this.noOfOccupiedSeatsPerClass.get(TravelClass.TravelType.BUSINESS);
+                break;
             case FIRST:
-                availableSeats = this.aeroplane.getNumberOfSeatsAvailable(travelType,noOfSeatsBookedFirst) - noOfBookingSeats;
+                noOfOccupiedSeats = this.noOfOccupiedSeatsPerClass.get(TravelClass.TravelType.FIRST);
+                break;
             case ECONOMY:
-                availableSeats = this.aeroplane.getNumberOfSeatsAvailable(travelType,noOfSeatsBookedEconomy) - noOfBookingSeats;
+                noOfOccupiedSeats = this.noOfOccupiedSeatsPerClass.get(TravelClass.TravelType.ECONOMY);
+                break;
         }
-        return (availableSeats >= 0 ? true : false);
+        return (this.aeroplane.getNumberOfSeatsAvailable(travelType) -
+                (noOfOccupiedSeats + noOfRequestedSeats) > 0 ? true : false);
     }
 
     public boolean validateSourceAndDestination(String source, String destination)
@@ -83,6 +114,48 @@ public class FlightInformation {
             return true;
         return false;
     }
+
+    public double getFare(TravelClass.TravelType travelType,
+                          int noOfRequestedSeats)
+    {
+
+        double fare = 0;
+        IPriceProcessor processor;
+        PricingModel pricingModel;
+        switch(travelType)
+        {
+            case BUSINESS:
+                pricingModel = new PricingModel();
+                pricingModel.setBaseFare(Optional.of(aeroplane.getBasefare(TravelClass.TravelType.BUSINESS)));
+                pricingModel.setNoOfRequestedSeats(Optional.of(noOfRequestedSeats));
+                pricingModel.setDepartureDate(Optional.of(this.departureDate));
+                processor = new BusinessClassPriceProcessor(pricingModel,pricingXml);
+                fare = processor.getFare();
+                break;
+            case FIRST:
+                pricingModel = new PricingModel();
+                pricingModel.setBaseFare(Optional.of(aeroplane.getBasefare(TravelClass.TravelType.FIRST)));
+                pricingModel.setNoOfRequestedSeats(Optional.of(noOfRequestedSeats));
+                pricingModel.setDepartureDate(Optional.of(this.departureDate));
+                processor = new FirstClassPriceProcessor(pricingModel,pricingXml);
+                fare = processor.getFare();
+                break;
+            case ECONOMY:
+                pricingModel = new PricingModel();
+                pricingModel.setBaseFare(Optional.of(aeroplane.getBasefare(TravelClass.TravelType.ECONOMY)));
+                pricingModel.setTotalCapacity(Optional.of(aeroplane.getNumberOfSeatsAvailable(TravelClass.TravelType.ECONOMY)));
+                pricingModel.setNoOfOccupiedSeats(Optional.of(this.noOfOccupiedSeatsPerClass.get(TravelClass.TravelType.ECONOMY)));
+                pricingModel.setNoOfRequestedSeats(Optional.of(noOfRequestedSeats));
+                processor = new EconomyClassPriceProcessor(pricingModel,pricingXml);
+                fare = processor.getFare();
+                break;
+
+        }
+
+        return fare;
+    }
+
+
 
 
 
