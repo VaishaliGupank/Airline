@@ -10,6 +10,7 @@ public class Aeroplane {
     private int noOfSeats;
     private List<TravelClass> travelClasses;
 
+
     public Aeroplane(int aeroplaneId, String modelNumber, List<TravelClass> travelClasses)
     {
         this.aeroplaneId = aeroplaneId;
@@ -18,15 +19,15 @@ public class Aeroplane {
     }
 
 
-    public int getNumberOfSeatsAvailable(TravelClass.TravelType travelType , int noOfSeatsBooked) {
+    public int getNumberOfSeatsAvailable(TravelClass.TravelType travelType) {
         Optional<TravelClass> travelClass = this.travelClasses.stream().
                 filter(travelClasses -> travelClasses.getTravelClass().equals(travelType)).findFirst();
         if(travelClass.isPresent())
         {
-            return (travelClass.get().getNoOfSeats() - noOfSeatsBooked);
+            return (travelClass.get().getNoOfSeats());
         }
 
-        return 0;
+        return -1 ;
     }
 
     public double getBasefare(TravelClass.TravelType travelType)
@@ -40,7 +41,6 @@ public class Aeroplane {
 
         return 0;
     }
-
 
 }
 
