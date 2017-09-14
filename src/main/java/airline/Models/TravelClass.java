@@ -41,6 +41,4 @@ public class TravelClass {
         return basePrice;
     }
 
-
-
 }
