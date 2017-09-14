@@ -58,7 +58,8 @@ public class FlightService {
         List<FlightInformation> getFlights;
         getFlights = searchFlightsWithSourceAndDestination(searchCriteria.getSource(),
                 searchCriteria.getDestination()).stream()
-                    .filter(flight -> flight.validateDepartureDate(searchCriteria.getParsedDate()) == true)
+                    .filter(flight -> flight.validateDepartureDate(searchCriteria.getParsedDate(),
+                            searchCriteria.getParsedTravelClass()) == true)
                     .filter(flight ->
                             flight.validateNumberOfAvailableSeats(searchCriteria.getParsedTravelClass(),
                                     searchCriteria.getNoOfPassengers().orElse(1)) == true)
