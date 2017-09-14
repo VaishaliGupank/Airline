@@ -27,10 +27,21 @@
     <PricingRule name="HikedFareOnDays">
         <TravelClass name="Economy"></TravelClass>
         <TravelClass name="Business">
-            <days>Mon,Fri,Sun</days>
-            <incrementPercentInFare>40</incrementPercentInFare>
+            <day name="MONDAY">
+                <incrementPercentInFare>40</incrementPercentInFare>
+            </day>
+            <day name="FRIDAY">
+                <incrementPercentInFare>40</incrementPercentInFare>
+            </day>
+            <day name="SUNDAY">
+                <incrementPercentInFare>40</incrementPercentInFare>
+            </day>
         </TravelClass>
-        <TravelClass name="First">10</TravelClass>
+        <TravelClass name="First">
+            <day name="All">
+                <incrementPercentInFare>10</incrementPercentInFare>
+            </day>
+        </TravelClass>
     </PricingRule>
     <PricingRule name="EveryDayIncrementInFareAfterOpeningDay">
         <TravelClass name="Economy"></TravelClass>
