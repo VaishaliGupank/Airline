@@ -4,6 +4,7 @@ import airline.Utility.PricingXMLReader;
 
 import java.time.DayOfWeek;
 import java.util.Map;
+import java.util.Optional;
 
 public class BusinessClassPriceProcessor extends PriceProcessor {
     public BusinessClassPriceProcessor(PricingModel pricingModel,PricingXMLReader pricingXMLReader )
@@ -13,10 +14,10 @@ public class BusinessClassPriceProcessor extends PriceProcessor {
 
 
     @Override
-    public double getFare() {
+    public Optional<Double> getFare() {
 
         if(validator.validate(pricingModel).size() != 0)
-            return 0;
+            return Optional.empty();
         Map<String,Float> pricingRules = pricingXMLReader.getPricingRulesForBusinessClass();
         double totalFare = 0;
         if(pricingModel.departureDate.isPresent()) {
@@ -30,7 +31,7 @@ public class BusinessClassPriceProcessor extends PriceProcessor {
         else
             totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
 
-        return totalFare;
+        return Optional.of(totalFare);
     }
 
 }
