@@ -1,15 +1,16 @@
 package airline.BAL;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Optional;
 
 public class PricingModel {
 
-    @NotEmpty
+
+    @NotNull
     protected Double baseFare;
-    @NotEmpty
+    @Min(1)
     protected Integer noOfRequestedSeats;
     protected Optional<Integer> totalCapacity;
     protected Optional<LocalDate> departureDate;
