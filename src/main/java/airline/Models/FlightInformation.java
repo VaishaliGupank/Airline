@@ -130,7 +130,8 @@ public class FlightInformation {
                 pricingModel.setNoOfRequestedSeats(noOfRequestedSeats);
                 pricingModel.setDepartureDate(Optional.of(this.departureDate));
                 processor = new BusinessClassPriceProcessor(pricingModel,pricingXml);
-                fare = processor.getFare();
+                if(processor.getFare().isPresent())
+                fare = processor.getFare().get();
                 break;
             case FIRST:
                 pricingModel = new PricingModel();
@@ -138,7 +139,8 @@ public class FlightInformation {
                 pricingModel.setNoOfRequestedSeats(noOfRequestedSeats);
                 pricingModel.setDepartureDate(Optional.of(this.departureDate));
                 processor = new FirstClassPriceProcessor(pricingModel,pricingXml);
-                fare = processor.getFare();
+                if(processor.getFare().isPresent())
+                    fare = processor.getFare().get();
                 break;
             case ECONOMY:
                 pricingModel = new PricingModel();
@@ -147,7 +149,8 @@ public class FlightInformation {
                 pricingModel.setNoOfOccupiedSeats(Optional.of(this.noOfOccupiedSeatsPerClass.get(TravelClass.TravelType.ECONOMY)));
                 pricingModel.setNoOfRequestedSeats(noOfRequestedSeats);
                 processor = new EconomyClassPriceProcessor(pricingModel,pricingXml);
-                fare = processor.getFare();
+                if(processor.getFare().isPresent())
+                    fare = processor.getFare().get();
                 break;
 
         }
