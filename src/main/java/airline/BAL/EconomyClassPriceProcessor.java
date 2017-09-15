@@ -16,7 +16,10 @@ public class EconomyClassPriceProcessor extends PriceProcessor  {
 
 
     @Override
-    public double getFare() {
+    public Optional<Double> getFare() {
+
+        if(validator.validate(pricingModel).size() != 0)
+            return Optional.empty();
         /* Get the pricing rules for economy class */
         List<PricingRule> pricingRules = pricingXMLReader.getPricingRulesForEconomy();
         double totalFare = 0;
@@ -40,7 +43,7 @@ public class EconomyClassPriceProcessor extends PriceProcessor  {
         else
             totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
 
-        return totalFare;
+        return Optional.of(totalFare);
     }
 
    /* public static interface IPriceProcessor {
