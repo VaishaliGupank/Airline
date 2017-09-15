@@ -14,8 +14,11 @@ public class FirstClassPriceProcessor extends PriceProcessor {
 
 
     @Override
-    public double getFare() {
+    public Optional<Double> getFare() {
         /* Get the pricing rules for first class */
+        if(validator.validate(pricingModel).size() != 0)
+            return Optional.empty();
+
         float incrementPercentInFare = pricingXMLReader.getPercentIncrementInFareFirstClass();
         double totalFare = 0;
 
@@ -34,7 +37,7 @@ public class FirstClassPriceProcessor extends PriceProcessor {
         }
         else
             totalFare = pricingModel.baseFare * pricingModel.noOfRequestedSeats;
-        return totalFare;
+        return Optional.of(totalFare);
     }
 
 }
