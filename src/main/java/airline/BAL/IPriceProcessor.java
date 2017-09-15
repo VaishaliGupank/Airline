@@ -1,6 +1,8 @@
 package airline.BAL;
 
+import java.util.Optional;
+
 public interface IPriceProcessor {
 
-    public double getFare();
+    public Optional<Double> getFare();
 }
