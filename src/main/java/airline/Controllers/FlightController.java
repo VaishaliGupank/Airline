@@ -54,8 +54,8 @@ public class FlightController {
                     flightSearchViewModel.setSource(flight.getSource());
                     flightSearchViewModel.setDestination(flight.getDestination());
                     flightSearchViewModel.setFlightNumber(flight.getFlightNumber());
-                    flightSearchViewModel.setFare(flight.getFare(flightSearchCriteria.getParsedTravelClass(),
-                            flightSearchCriteria.getNoOfPassengers().orElse(1)));
+                    flightSearchViewModel.setFare((flight.getFare(flightSearchCriteria.getParsedTravelClass(),
+                            flightSearchCriteria.getNoOfPassengers().orElse(1))));
                     flistSearchViewModelList.add(flightSearchViewModel);
 
                 }
