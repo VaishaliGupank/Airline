@@ -15,6 +15,8 @@ public class BusinessClassPriceProcessor extends PriceProcessor {
     @Override
     public double getFare() {
 
+        if(validator.validate(pricingModel).size() != 0)
+            return 0;
         Map<String,Float> pricingRules = pricingXMLReader.getPricingRulesForBusinessClass();
         double totalFare = 0;
         if(pricingModel.departureDate.isPresent()) {
