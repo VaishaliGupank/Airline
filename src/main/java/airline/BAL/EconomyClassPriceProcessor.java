@@ -9,9 +9,9 @@ public class EconomyClassPriceProcessor extends PriceProcessor  {
 
 
     private PricingXMLReader pricingXMLReader  = new PricingXMLReader();
-    public EconomyClassPriceProcessor(PricingModel pricingModel,PricingXMLReader pricingXMLReader)
+    public EconomyClassPriceProcessor(PricingModel pricingModel)
     {
-        super(pricingModel,pricingXMLReader);
+        super(pricingModel);
     }
 
 
@@ -36,7 +36,7 @@ public class EconomyClassPriceProcessor extends PriceProcessor  {
 
             if (pricingRuleForBooking.isPresent()) {
                 totalFare = Math.round(pricingModel.baseFare *
-                        (pricingRuleForBooking.get().getIncrementPercentInFare() / 100 + 1))
+                        (pricingRuleForBooking.get().getIncrementPercentInFare()  + 1))
                         * pricingModel.noOfRequestedSeats;
             }
         }

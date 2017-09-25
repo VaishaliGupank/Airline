@@ -1,7 +1,7 @@
 package airline.Controllers;
 
 import airline.Models.FlightInformation;
-import airline.Models.FlightSearchCriteria;
+import airline.ViewModels.FlightSearchCriteria;
 import airline.Services.FlightService;
 import airline.ViewModels.FlightSearchViewModel;
 import org.springframework.beans.factory.annotation.Autowired;

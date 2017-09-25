@@ -21,12 +21,11 @@ public class Aeroplane {
 
     public int getNumberOfSeatsAvailable(TravelClass.TravelType travelType) {
         Optional<TravelClass> travelClass = this.travelClasses.stream().
-                filter(travelClasses -> travelClasses.getTravelClass().equals(travelType)).findFirst();
+               filter(travelClasses -> travelClasses.getTravelClass().equals(travelType)).findFirst();
         if(travelClass.isPresent())
         {
             return (travelClass.get().getNoOfSeats());
         }
-
         return -1 ;
     }
 

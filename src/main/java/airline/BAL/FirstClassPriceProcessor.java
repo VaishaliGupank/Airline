@@ -1,15 +1,13 @@
 package airline.BAL;
-import airline.Utility.PricingXMLReader;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 public class FirstClassPriceProcessor extends PriceProcessor {
 
-    public FirstClassPriceProcessor(PricingModel pricingModel, PricingXMLReader pricingXMLReader)
+    public FirstClassPriceProcessor(PricingModel pricingModel)
     {
-        super(pricingModel,pricingXMLReader);
+        super(pricingModel);
     }
 
 
@@ -31,7 +29,7 @@ public class FirstClassPriceProcessor extends PriceProcessor {
                 long daysBetweenDateOfTravelAndOpeningDateOfBookingFlight = ChronoUnit.DAYS.between(openingDateOfBookingFlight,
                         LocalDate.now());
                 totalFare = Math.round(pricingModel.baseFare *
-                        Math.pow(incrementPercentInFare / 100 + 1, daysBetweenDateOfTravelAndOpeningDateOfBookingFlight))
+                        Math.pow(incrementPercentInFare  + 1, daysBetweenDateOfTravelAndOpeningDateOfBookingFlight))
                         * pricingModel.noOfRequestedSeats;
             }
         }

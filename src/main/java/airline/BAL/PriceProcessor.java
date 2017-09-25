@@ -8,9 +8,9 @@ import javax.validation.ValidatorFactory;
 public abstract class PriceProcessor implements IPriceProcessor {
 
     protected PricingModel pricingModel;
-    protected PricingXMLReader pricingXMLReader;
+    protected PricingXMLReader pricingXMLReader = new PricingXMLReader();
     protected static javax.validation.Validator validator;
-    public PriceProcessor(PricingModel pricingModel,PricingXMLReader pricingXMLReader)
+    public PriceProcessor(PricingModel pricingModel)
     {
         this.pricingModel = pricingModel;
         this.pricingXMLReader = pricingXMLReader;

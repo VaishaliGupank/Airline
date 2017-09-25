@@ -10,12 +10,12 @@
             <Rule id="2">
                 <minPercentOfBookedSeats>41</minPercentOfBookedSeats>
                 <maxPercentOfBookedSeats>90</maxPercentOfBookedSeats>
-                <incrementPercentInFare>30</incrementPercentInFare>
+                <incrementPercentInFare>0.3</incrementPercentInFare>
             </Rule>
             <Rule id="3">
                 <minPercentOfBookedSeats>91</minPercentOfBookedSeats>
                 <maxPercentOfBookedSeats>100</maxPercentOfBookedSeats>
-                <incrementPercentInFare>60</incrementPercentInFare>
+                <incrementPercentInFare>0.6</incrementPercentInFare>
             </Rule>
         </TravelClass>
     </PricingRule>
@@ -28,18 +28,18 @@
         <TravelClass name="Economy"></TravelClass>
         <TravelClass name="Business">
             <day name="MONDAY">
-                <incrementPercentInFare>40</incrementPercentInFare>
+                <incrementPercentInFare>0.4</incrementPercentInFare>
             </day>
             <day name="FRIDAY">
-                <incrementPercentInFare>40</incrementPercentInFare>
+                <incrementPercentInFare>0.4</incrementPercentInFare>
             </day>
             <day name="SUNDAY">
-                <incrementPercentInFare>40</incrementPercentInFare>
+                <incrementPercentInFare>0.4</incrementPercentInFare>
             </day>
         </TravelClass>
         <TravelClass name="First">
             <day name="All">
-                <incrementPercentInFare>10</incrementPercentInFare>
+                <incrementPercentInFare>0.1</incrementPercentInFare>
             </day>
         </TravelClass>
     </PricingRule>
@@ -47,7 +47,7 @@
         <TravelClass name="Economy"></TravelClass>
         <TravelClass name="Business"></TravelClass>
         <TravelClass name="First">
-            <incrementPercentInFare>10</incrementPercentInFare>
+            <incrementPercentInFare>0.1</incrementPercentInFare>
         </TravelClass>
     </PricingRule>
 

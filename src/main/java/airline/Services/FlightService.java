@@ -1,7 +1,7 @@
 package airline.Services;
 
 import airline.Models.FlightInformation;
-import airline.Models.FlightSearchCriteria;
+import airline.ViewModels.FlightSearchCriteria;
 import airline.Models.Place;
 import airline.Models.TravelClass;
 import airline.Repositories.FlightInformationRepository;

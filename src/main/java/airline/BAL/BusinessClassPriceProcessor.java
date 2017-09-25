@@ -1,15 +1,13 @@
 package airline.BAL;
 
-import airline.Utility.PricingXMLReader;
-
 import java.time.DayOfWeek;
 import java.util.Map;
 import java.util.Optional;
 
 public class BusinessClassPriceProcessor extends PriceProcessor {
-    public BusinessClassPriceProcessor(PricingModel pricingModel,PricingXMLReader pricingXMLReader )
+    public BusinessClassPriceProcessor(PricingModel pricingModel)
     {
-        super(pricingModel,pricingXMLReader);
+        super(pricingModel);
     }
 
 
@@ -24,7 +22,7 @@ public class BusinessClassPriceProcessor extends PriceProcessor {
             DayOfWeek day =  pricingModel.departureDate.get().getDayOfWeek();
             Float incrementPercentInFare = pricingRules.get(day.name());
             totalFare = incrementPercentInFare != null ? Math.round(pricingModel.baseFare *
-                    (incrementPercentInFare / 100 + 1))
+                    (incrementPercentInFare  + 1))
                     * pricingModel.noOfRequestedSeats : pricingModel.baseFare * pricingModel.noOfRequestedSeats;
 
         }

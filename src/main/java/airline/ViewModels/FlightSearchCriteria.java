@@ -1,5 +1,6 @@
-package airline.Models;
+package airline.ViewModels;
 
+import airline.Models.TravelClass;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ public class FlightSearchCriteria {
     private String destination;
 
     private Optional<Integer> noOfPassengers;
+
     private String departureDate;
 
     @NotEmpty(message = "Please enter your travel class.")
